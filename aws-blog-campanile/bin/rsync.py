@@ -334,8 +334,13 @@ def main():
         sys.exit(0)
 
     ## Run job
-    response = emr.connect_to_region(region,
-            profile_name=args.profile).add_jobflow_steps(args.job, jobsteps)
+#    for i in jobsteps:
+#        print "Step to add %s" % i
+    print "Connecting to EMR %s" % region
+    print "Using profile %s" % args.profile
+    print "To JobID %s" % args.job
+    emrconn = emr.connect_to_region(region, profile_name=args.profile)
+    response = emrconn.add_jobflow_steps(args.job, jobsteps)
 
     for i in response.stepids:
         print "Added step %s" % i.value
